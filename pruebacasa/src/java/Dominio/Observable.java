@@ -24,14 +24,14 @@ public class Observable {
     public void eliminar(Observador obs){
         observadores.remove(obs);
     }
-    public void notificar(Object param){
+    public void notificar(Object param, Object msj){
         
         for(Observador obs: observadores){
-            obs.actualizar(this, param);
+            obs.actualizar(this, param,msj);
         }
     }
     public void notificar(){
-        notificar(null);
+        notificar(null,null);
     }
     
     public void limpiar()

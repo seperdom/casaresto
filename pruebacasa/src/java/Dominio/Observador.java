@@ -14,5 +14,5 @@ public interface Observador {
     
     
 
-    public void actualizar(Observable origen, Object param);
+    public void actualizar(Observable origen, Object param, Object msj);
 }

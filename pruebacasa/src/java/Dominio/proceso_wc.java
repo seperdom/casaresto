@@ -15,30 +15,27 @@ import javax.jws.WebParam;
  * @author seperdom
  */
 @WebService(serviceName = "proceso_wc")
-
 public class proceso_wc {
 
     /**
      * This is a sample web service operation
      */
     
-    
-    @WebMethod public int RegistroCliente(String pDestinatario,String pMensaje)
+    @WebMethod (operationName = "RegistroCliente")public int RegistroCliente(String pDestinatario,String pMensaje)
     {
 
         //var context = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
-        int res = 1;
-        //Fachada fachada = Fachada.getFachada();
+        int res = 1;    
+        Fachada fachada = Fachada.getInstancia();
         // bool resultado = fachada.insertarChat(pEmisor, pDestinatario, pMensaje);
         //context.Clients.All.SendNotifications(pMensaje);
         System.out.println(pMensaje);
         //  if (resultado == true)
         //{
         //  res = 1;
-        //fachada.notificar(pDestinatario, pMensaje);
+        fachada.notificar(pDestinatario, pMensaje);
         //}
 
         return res;
     }
-
 }

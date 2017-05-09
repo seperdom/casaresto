@@ -7,6 +7,7 @@
 package Controladores;
 
 import Dominio.Chat;
+import Dominio.Fachada;
 import Dominio.MensajeChat;
 import Dominio.Notificaciones;
 import Dominio.Observable;
@@ -36,7 +37,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class Contacto extends HttpServlet implements Observador{
 
-    
+    HttpServletRequest req;
+    Fachada fachada=Fachada.getInstancia();
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
@@ -68,7 +70,9 @@ public class Contacto extends HttpServlet implements Observador{
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        req=request;
         
+        fachada.agregar(this);
         String textoChat=request.getParameter("txtUsuario");
         if(request.getParameter("btnChat")!=null){
         if(request.getSession().getAttribute("chat")==null){
@@ -77,10 +81,11 @@ public class Contacto extends HttpServlet implements Observador{
         }
         if(!textoChat.equals("")){
             
+            
             String idS=(String)request.getSession().getId();
             Chat chat=(Chat)request.getSession().getAttribute("chat");
             chat.agregarMensaje(new MensajeChat(idS,"CasaR",textoChat));
-            chat.agregarMensaje(new MensajeChat("CasaR",idS,"respuesta a "+textoChat ));
+            //chat.agregarMensaje(new MensajeChat("CasaR",idS,"respuesta a "+textoChat ));
             //request.getSession().setAttribute("chat", chat);
             EnviaMensaje(textoChat,idS);
             
@@ -101,14 +106,18 @@ public class Contacto extends HttpServlet implements Observador{
     }// </editor-fold>
 
     @Override
-    public void actualizar(Observable origen, Object param) {       
-                
-      /*  if(param==Notificaciones.iniciarJuego)
-        {            
-            refrescar();
+    public void actualizar(Observable origen, Object param, Object msj) {       
+       
+       String idS=(String)req.getSession().getId(); 
+       String textoChat=req.getParameter("txtUsuario");
+        if((String)param==idS)
+        {           
+            Chat chat=(Chat)req.getSession().getAttribute("chat");
+            String mensaje=(String)msj;
+            chat.agregarMensaje(new MensajeChat("CasaR",idS,"respuesta a "+textoChat ));
            
         }       
-        else if(param==Notificaciones.seguirJugando)
+        /*else if(param==Notificaciones.seguirJugando)
         {            
             boolean anoto=juego.anoto(jugador);
             dt.actualizarDatos(anoto);            

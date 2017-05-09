@@ -32,10 +32,12 @@
         <servlet-name>Contacto</servlet-name>
         <url-pattern>/Contacto</url-pattern>
     </servlet-mapping>
+        
     <servlet-mapping>
         <servlet-name>proceso_wc</servlet-name>
         <url-pattern>/proceso_wc</url-pattern>
     </servlet-mapping>
+
     <session-config>
         <session-timeout>
             30

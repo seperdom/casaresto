@@ -12,5 +12,5 @@ package Dominio;
  */
 public enum Notificaciones {
     
-    iniciarJuego,sortear, seguirJugando, abandonaJuego, finJuego;
+    iniciarChat;
 }
